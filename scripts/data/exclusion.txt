@@ -9,13 +9,13 @@ Church's Chicken
 Coco's
 Dairy Queen 
 Denny's 
-Domino's Pizza 
+Domino's 
 Foster's Freeze 
 IHOP
-In-N-Out Burger 
+In-N-Ou 
 Jack in the Box 
 KFC
-kentucky friend
+kentucky fried
 Little Caesar's
 McDonald
 Marie Calendar
@@ -36,3 +36,4 @@ Subway
 Taco Bell 
 Tcby
 The Habit
+wendy's

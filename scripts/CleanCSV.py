@@ -54,7 +54,8 @@ def main(argv=None):
         parser.add_option("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %default]")
         
         # set defaults
-        parser.set_defaults(outfile="./data/output.csv", infile="./data/items.csv", exclusion_file="./data/exclusion.txt")
+        ## probably should not be used to store data inside the working machine... use your local directory
+        parser.set_defaults(outfile="~/data/output.csv", infile="~/data/items.csv", exclusion_file="./data/exclusion.txt")
 
         # process options
         (opts, args) = parser.parse_args(argv)
@@ -81,6 +82,9 @@ def main(argv=None):
         # clean up the output files 
         f_out = open(opts.outfile,'w')
         f_out.close()
+        f_outx = open(opts.outfile.replace('.csv', '.ex.csv'),'w')
+        f_outx.close()        
+        
         
         with open(opts.infile) as csvfile:
             crawl_list = csv.reader(csvfile)
@@ -120,11 +124,12 @@ def write_file(row,file_name):
 # loop through the excluded words
 # if there are any matches to the restaurant name then skip it
 def is_excluded(row,excluded_words):
+    valstring = ' ' . join(row)
     for word in excluded_words:
-        for item in row:
-            if(item.lower().find(word) > 0):
-                if DEBUG: print "Found word match for exclusion " + item + " with word " + word
-                return True
+#         print "ITEM: " + valstring.lower() + " WORD: " + word.lower() + "\n"
+        if(valstring.lower().find(word.lower()) > 0):
+            if DEBUG: print "Found word match for exclusion with word " + word
+            return True
     return False
 
 if __name__ == "__main__":

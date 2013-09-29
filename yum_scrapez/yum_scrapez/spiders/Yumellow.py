@@ -43,6 +43,7 @@ class YumellowSpider(BaseSpider):
         # used to keep from parsing pages if we hit an error 
         last_page = False
         cnt = 0
+        break_count = 0
         # get the responses section 
         sites = hxs.select("//div[@class='listing-content']")
         for site in sites:
@@ -73,10 +74,14 @@ class YumellowSpider(BaseSpider):
                 continue
             
             if(response.url.find(item['city'][0].lower().replace(' ','-')) < 1):
-                last_page = True
+                break_count += 1
                 print "WE were broken here with URL: " + response.url + " AND " + item['city'][0].lower().replace(' ','-') + "\n"
-                break
+                continue
             yield item
+        
+        if break_count > 25:
+            last_page = True
+            print "Found too many invalid records... breaking flow by not asking NEXT "
         
         next_url = hxs.select("//li[@class='next']/a/@href").extract()
         if ((len(next_url) > 0) and not last_page ):
